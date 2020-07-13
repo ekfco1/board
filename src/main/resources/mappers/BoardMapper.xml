@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs.mapper.boardMapper">
+	<select id="getBoardList" resultType="boardVO">
+		select board_no, board_title, mem_name
+		from board.board b
+		inner join board.member m on b.mem_no = m.mem_no
+		order by board_no desc;
+	</select>
+	
+	<select id ="getResList" resultType = "responseVO">
+		select res_content, mem_name
+		from board.response r
+		join board.member m on m.mem_no = r.mem_no
+		where board_no = #{boardNo}
+		order by res_no desc
+	</select>
+	
+	<insert id = "postwriteRes">
+	insert into response(res_no, mem_no, res_content, board_no)
+	values(#{resNo},#{memNo},#{resContent},#{boardNo})
+	</insert>
+	
+	<select id="readBoard" resultType="boardVO">
+		select * 
+		from board.board b 
+		join board.member m on b.mem_no = m.mem_no 
+		where board_no = #{boardNo}
+	</select>
+	
+	<insert id ="writeBoard">
+	insert into board(mem_no, board_title, board_content)
+	values(#{memNo},#{boardTitle}, #{boardContent})</insert>
+	
+	<update id = "updateBoard">
+	update board
+	set 
+	board_title = #{boardTitle},
+	board_content = #{boardContent}
+	where board_no = #{boardNo}
+	</update>
+	<select id ="setBoard" resultType = "boardVO">
+		select * 
+		from board.board b
+		join board.member m on b.mem_no = member.mem_no
+		where board_no = #{boardNo}
+	</select>
+	<delete id = "deleteBoard">
+		delete from board
+		where board_no = #{boardNo}
+	</delete>
+</mapper>

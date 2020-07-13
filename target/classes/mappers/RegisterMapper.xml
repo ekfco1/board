@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs.mapper.registerMapper">
+	<insert id="addUser">
+		insert into board.member(mem_name,mem_gender,mem_email
+		 ,mem_phone,mem_id,mem_passwd)
+		values (#{memName}, #{memGender},#{memEmail},#{memPhone},#{memId},#{memPasswd})
+	</insert>
+	<select id="idCheck" resultType = "java.lang.Integer">
+		select count(*) from board.member where mem_id = #{memId}
+	</select>
+	<select id="infoFind" resultType = "RegisterVO">
+		select count(*) as memCnt,mem_id,mem_passwd from board.member where mem_name = #{memName} and mem_phone = #{memPhone}
+	</select>
+</mapper>
